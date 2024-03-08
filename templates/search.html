@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi">
+    <title>电影检索</title>
+    <link rel="stylesheet" href="../static/css/search.css">
+</head>
+<body class="bg">
+    <!-- 搜索框 -->
+    <div align="center" style="margin-top: 100px">
+
+        <div class="Logo" style="margin-top: 20px">
+            <img src="../static/movie_pre_logo.png" alt="">
+        </div>
+
+        <div class="search bar" >
+            <form id="searchForm" action="{{ url_for('get_detail') }}" method="get">
+                <input type="text" placeholder="请输入搜索关键词" name="key_word">
+                <button type="submit" ></button>
+            </form>
+
+            <p>{{ exist }}{{ notexist }}</p>
+
+            <div class="predict_score" style="font-size: 25px;color:#ec500b;font-weight: bolder">
+              <p>预测评分：</p><p>hhh{{ data }}</p>
+            </div>
+
+            <div class="unreleased_detail">
+            {% for pre_movie in pre_movies %}
+            <div class="unreleased_detail_show">
+                <a >{{ pre_movie.movie_title }}</a>
+                <span >{{ pre_movie.audience }}</span>
+            </div>
+            {% endfor %}
+            </div>
+
+            <div class="search_detail">
+
+            {% for key_word in key_words %}
+
+                <h1><span id="movie">{{ key_word.movie }}</span></h1>
+                <div id="mainpic">
+                    放置海报
+                </div>
+                <div id="info">
+                    <span>导演：{{ key_word.directors }}</span>
+                    <span>主演：{{ key_word.actors[:3] }}</span>
+                    <span>类型：{{ key_word.genre }}</span>
+                    <span>语言：{{ key_word.languages }}</span>
+                    <span>上映时间：{{ key_word.release_date }}</span>
+                    <span>片长：{{ key_word.duration }}</span>
+                </div>
+                <div id="douban_score">
+                    <span>豆瓣评分：{{ key_word.douban_score }}</span>
+                    <span>想看人数：{{ key_word.douban_votes }}</span>
+                </div>
+                <span id="storyline">&nbsp;&nbsp;&nbsp;&nbsp;{{ key_word.storyline }}</span>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
