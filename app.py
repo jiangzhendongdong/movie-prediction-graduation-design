@@ -17,7 +17,12 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 
-@app.route("/", methods=["POST", "GET"])
+@app.route('/index.html', methods=["POST", "GET"])
+def index():
+    return render_template('index.html')
+
+
+@app.route('/moviePrediction.html', methods=["POST", "GET"])
 def get_detail():
     global exist, notexist
     key_words = ""
@@ -26,7 +31,7 @@ def get_detail():
     notexist = ""  # 添加这行代码来初始化全局变量notexist
     if request.args.get('key_word', None) is None:
         print("未传参")
-        return render_template("index.html")
+        return render_template("moviePrediction.html")
     else:
         key_words = request.args.get('key_word')
         if check_movie_exists(key_words):
@@ -34,7 +39,9 @@ def get_detail():
         else:
             notexist = "<<<" + key_words + ">>>" + "电影不存在，准备启动爬虫爬取最新电影数据"
 
-        pre_movies = PreMovies.query.order_by(PreMovies.date.desc()).limit(20)
+        # 查询PreMovies表中观众从多到少排序的前20条数据
+        pre_movies = PreMovies.query.order_by(PreMovies.audience.desc()).limit(10)
+
         # 使用模糊搜索查询数据库中符合条件的电影条目
         key_words = Movie.query.filter(Movie.movie.like("%{}%".format(key_words))).all()
         print(key_words)
@@ -47,26 +54,16 @@ def get_detail():
         items, item_count, page_count = get_paginated_results(
             Movie.query.filter(Movie.movie.like("%{}%".format(key_words))), page, page_size)
 
-        return render_template("index.html", pre_movies=pre_movies, key_words=key_words, exist=exist,
+        # prediction_results = get_prediction_result()
+        # data="随机森林预测评分为： " + str(prediction_results))
+
+        # + "--------" + "xgbboost预测评分为： " + str(prediction_results[-2])
+        # + "--------" + "catboost预测评分为： " + str(round(prediction_results[-1], 3))
+        # + "--------" + "lgbm预测评分为： " + str(prediction_results[-4])
+        # 映射到类似与百度百科的页面，并将查询到的条目传过去
+
+        return render_template("moviePrediction.html", pre_movies=pre_movies, key_words=key_words, exist=exist,
                                notexist=notexist)
-
-
-@app.route('/index.html', methods=["POST", "GET"])
-def index():
-    return render_template('index.html')
-
-
-@app.route('/moviePrediction.html', methods=["POST", "GET"])
-def movie_prediction():
-    movie_list = movieLists.movie_list
-    # prediction_results = get_prediction_result()
-    # data="随机森林预测评分为： " + str(prediction_results))
-
-    # + "--------" + "xgbboost预测评分为： " + str(prediction_results[-2])
-    # + "--------" + "catboost预测评分为： " + str(round(prediction_results[-1], 3))
-    # + "--------" + "lgbm预测评分为： " + str(prediction_results[-4])
-    # 映射到类似与百度百科的页面，并将查询到的条目传过去
-    return render_template('moviePrediction.html', movies=movie_list)
 
 
 @app.route('/hotMovies.html', methods=["POST", "GET"])

@@ -1,0 +1,128 @@
+/*.bg{*/
+/*    background-image: url("../background.png");*/
+/*    background-repeat: no-repeat;*/
+/*    background-size:100% 100%;*/
+/*    background-position: center;*/
+/*    background-attachment: fixed;*/
+/*}*/
+
+* {
+    box-sizing:border-box;
+    padding: 0;
+}
+
+div.search {
+    padding:10px 0;
+    margin-left: 150px;
+}
+form {
+    position:relative;
+    width:600px;
+    margin:0 auto;
+}
+input,button {
+    border:none;
+    outline:none;
+}
+input {
+    width:100%;
+    height:42px;
+    padding-left:13px;
+}
+button {
+    height:42px;
+    width:42px;
+    cursor:pointer;
+    position:absolute;
+}
+.bar input {
+    border:2px solid #ec500b;
+    border-radius:5px;
+    background:transparent;
+    top:0;
+    right:0;
+}
+.bar button {
+    background: #ec500b;
+    border-radius:0 5px 5px 0;
+    width:90px;
+    top:0;
+    right:0;
+}
+.bar button:before {
+    content:"检索";
+    font-size:13px;
+    color:#F9F0DA;
+}
+
+.predict_score p{
+    display: inline-block;
+}
+
+
+.unreleased_detail{
+    border:2px solid #ec500b;
+    border-radius:5px;
+    height:600px ;
+    width: 600px;
+    align-content: center;
+    /*margin-bottom: ;: 60px auto 0;*/
+    background-image: linear-gradient( 135deg, #FFF886 10%, #F072B6 100%);
+    display: inline-block;
+    position: relative;
+    overflow-y: auto;  /* 添加这一行 */
+}
+
+.unreleased_detail_show{
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center;
+    height: 50px;
+    margin-top: 9px;
+
+}
+
+.unreleased_detail_show a {
+    margin-right: 30px;
+     font-size: 20px;
+}
+.unreleased_detail_show span{
+    font-size: 20px;
+}
+
+.search_detail{
+    border:2px solid #ec500b;
+    border-radius:5px;
+    height:600px ;
+    width: 600px;
+    align-content: center;
+    /*margin: 60px auto 0;*/
+    background-image: linear-gradient( 135deg, #FFF886 10%, #F072B6 100%);
+    display: inline-block;
+    vertical-align: top;
+    overflow-y: auto;  /* 添加这一行 */
+}
+
+#movie{
+    display: inline-block; /* 将h1元素设置为内联块元素 */
+    position: relative; /* 将h1元素设置为相对定位 */
+  }
+
+#mainpic, #info, #douban_score {
+    width: 30%;
+    height: 200px;
+    display: inline-block; /* 将div设置为内联块元素 */
+    /*text-align: left;*/
+    line-height: 30px;
+    vertical-align: top;
+  }
+
+span {
+    text-align: left; /* 将span内的文字居左显示 */
+    display: block; /* 将span设置为块元素 */
+  }
+
+#storyline{
+    margin-left: 20px;
+    margin-right: 20px;
+}

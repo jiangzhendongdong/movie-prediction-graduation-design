@@ -1,5 +1,6 @@
 import pymysql
 
+
 # 连接数据库
 def check_movie_exists(key_word):
     # 连接到数据库
