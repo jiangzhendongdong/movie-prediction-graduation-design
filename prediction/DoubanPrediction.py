@@ -6,13 +6,14 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from pyinstrument import Profiler
+from catboost import CatBoostRegressor
 
 profiler_get_detail = Profiler()
 profiler_get_detail.start()
 
 
 def data_preprocessing():
-    movie = pd.read_csv("DoubanMoviesData.csv")
+    movie = pd.read_csv("D:\\movie-prediction-graduation-design\\DoubanMoviesData.csv")
 
     threshold = 15
     columns_with_too_many_categories = []
@@ -71,8 +72,6 @@ def get_prediction_result():
     return ratingscore
 
 
-
-
 result = get_prediction_result()
 print(result)
 
@@ -80,7 +79,7 @@ profiler_get_detail.stop()
 profiler_get_detail.print()
 
 
-def XXX():
+def predict():
     # x = df.drop(['douban_score'], axis=1)  # 特征
     # y = df['douban_score']  # 目标变量
     # x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42, shuffle=False)
@@ -153,12 +152,12 @@ def XXX():
     # y_pred_lgbm = lgbm_regressor.predict(x_test)
 
     # 计算各个模型的性能指标
-    def evaluate_model(y_true, y_pred):
-        mse = mean_squared_error(y_true, y_pred)
-        rmse = np.sqrt(mse)
-        mae = mean_absolute_error(y_true, y_pred)
-        r2 = r2_score(y_true, y_pred)
-        return mse, rmse, mae, r2
+    # def evaluate_model(y_true, y_pred):
+    #     mse = mean_squared_error(y_true, y_pred)
+    #     rmse = np.sqrt(mse)
+    #     mae = mean_absolute_error(y_true, y_pred)
+    #     r2 = r2_score(y_true, y_pred)
+    #     return mse, rmse, mae, r2
 
     # mse_rf, rmse_rf, mae_rf, r2_rf = evaluate_model(y_test, y_pred_rf)
     # mse_dt, rmse_dt, mae_dt, r2_dt = evaluate_model(y_test, y_pred_dt)
@@ -174,14 +173,13 @@ def XXX():
     #                               'RMSE': [rmse_rf, rmse_dt, rmse_lr, rmse_catboost],
     #                               'MAE': [mae_rf, mae_dt, mae_lr, mae_catboost],
     #                               'R^2': [r2_rf, r2_dt, r2_lr, r2_catboost]})
-    #
-    # predictions_df = pd.DataFrame({'True Values': y_test,
-    #                                'Random Forest Predictions': y_pred_rf,
-    #                                'Decision Tree Predictions': y_pred_dt,
-    #                                'Linear Regression Predictions': y_pred_lr,
-    #                                #                                'xGBoost Predictions': y_pred_xgb,
-    #                                'CatBoost Predictions': y_pred_catboost, })
-    #                                'LightGBM Predictions': y_pred_lgbm
+    # comparison_df = pd.DataFrame({'Model': ['CatBoost'],
+    #                               'MSE': [mse_catboost],
+    #                               'RMSE': [rmse_catboost],
+    #                               'MAE': [ mae_catboost],
+    #                               'R^2': [r2_catboost]})
 
-    result = 1
+    # predictions_df = pd.DataFrame({'True Values': y_test,
+    #                                'CatBoost Predictions': y_pred_catboost, })
+
     return result

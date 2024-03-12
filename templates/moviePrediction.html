@@ -162,43 +162,58 @@
       </div>
       <!-- 主要内容部分 -->
       <!-- 搜索框 -->
-      <div align="center" style="margin-top: 100px">
+      <div class="co-right" id="next-one">
+          <div align="center" style="margin-top: 100px">
 
-          <div class="search bar" >
-              <form id="searchForm" action="{{ url_for('get_detail') }}" method="get">
-                  <input type="text" placeholder="请输入搜索关键词" name="key_word">
-                  <button type="submit" ></button>
-              </form>
+              <div class="search bar" >
+                  <form id="searchForm" action="{{ url_for('get_detail') }}" method="get">
+                      <input type="text" placeholder="请输入搜索关键词" name="key_word">
+                      <button type="submit" value="预测"></button>
+                  </form>
 
-              <p>{{ exist }}{{ notexist }}</p>
+                  <p>{{ exist }}{{ notexist }}</p>
 
-              <div class="predict_score" style="font-size: 25px;color:#ec500b;font-weight: bolder">
-                <p>预测评分：</p><p>hhh{{ data }}</p>
-              </div>
-
-              <div class="search_detail">
-
-              {% for key_word in key_words %}
-
-                  <h1><span id="movie">{{ key_word.movie }}</span></h1>
-                  <div id="mainpic">
-                      放置海报
+                  <div class="predict_score" style="font-size: 25px;color:#ec500b;font-weight: bolder">
+                    <p>预测评分：</p><p>👆请输入电影名称启动预测模块{{ data }}</p>
                   </div>
-                  <div id="info">
-                      <span>导演：{{ key_word.directors }}</span>
-                      <span>主演：{{ key_word.actors[:3] }}</span>
-                      <span>类型：{{ key_word.genre }}</span>
-                      <span>语言：{{ key_word.languages }}</span>
-                      <span>上映时间：{{ key_word.release_date }}</span>
-                      <span>片长：{{ key_word.duration }}</span>
+
+                  <div class="search_detail">
+
+                  {% for key_word in key_words %}
+
+                      <h1><span id="movie">{{ key_word.movie }}</span></h1>
+                      <div id="mainpic">
+                          放置海报
+                      </div>
+                      <div id="info">
+                          <span>导演：{{ key_word.directors }}</span>
+                          <span>主演：{{ key_word.actors[:3] }}</span>
+                          <span>类型：{{ key_word.genre }}</span>
+                          <span>语言：{{ key_word.languages }}</span>
+                          <span>上映时间：{{ key_word.release_date }}</span>
+                          <span>片长：{{ key_word.duration }}</span>
+                      </div>
+                      <div id="douban_score">
+                          <span>豆瓣评分：{{ key_word.douban_score }}</span>
+                          <span>想看人数：{{ key_word.douban_votes }}</span>
+                      </div>
+                      <span id="storyline">&nbsp;&nbsp;&nbsp;&nbsp;{{ key_word.storyline }}</span>
+                  {% endfor %}
                   </div>
-                  <div id="douban_score">
-                      <span>豆瓣评分：{{ key_word.douban_score }}</span>
-                      <span>想看人数：{{ key_word.douban_votes }}</span>
-                  </div>
-                  <span id="storyline">&nbsp;&nbsp;&nbsp;&nbsp;{{ key_word.storyline }}</span>
-              {% endfor %}
-              </div>
+
+      </div>
+      <div class="content-li li1">
+          <div class="li1-box">
+          {% for movie in movies %}
+          <a class="li1-box-item carbox" href="{{ movie.url }}">
+            <img src="../static/download-movies-image/怪物.jpg" alt="">
+            <div class="boxitem-title">
+              <h1>{{ movie.title }}</h1>
+            </div>
+          </a>
+          {% endfor %}
+          </div>
+      </div>
 
 <!--              <div class="unreleased_detail">-->
 <!--              {% for pre_movie in pre_movies %}-->

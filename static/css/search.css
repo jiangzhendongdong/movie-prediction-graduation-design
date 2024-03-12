@@ -13,7 +13,7 @@
 
 div.search {
     padding:10px 0;
-    margin-left: 150px;
+    margin-left: 50px;
 }
 form {
     position:relative;
@@ -50,7 +50,7 @@ button {
     right:0;
 }
 .bar button:before {
-    content:"检索";
+    content:"预测";
     font-size:13px;
     color:#F9F0DA;
 }
@@ -67,7 +67,7 @@ button {
     width: 600px;
     align-content: center;
     /*margin-bottom: ;: 60px auto 0;*/
-    background-image: linear-gradient( 135deg, #FFF886 10%, #F072B6 100%);
+    background-image: linear-gradient( 135deg, #02162b 10%, #02162b 100%);
     display: inline-block;
     position: relative;
     overflow-y: auto;  /* 添加这一行 */
@@ -93,11 +93,11 @@ button {
 .search_detail{
     border:2px solid #ec500b;
     border-radius:5px;
-    height:600px ;
+    height:400px ;
     width: 600px;
     align-content: center;
     /*margin: 60px auto 0;*/
-    background-image: linear-gradient( 135deg, #FFF886 10%, #F072B6 100%);
+    background-image: linear-gradient( 135deg, #02162b 10%, #02162b 100%);
     display: inline-block;
     vertical-align: top;
     overflow-y: auto;  /* 添加这一行 */

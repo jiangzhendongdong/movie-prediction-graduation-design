@@ -8,6 +8,7 @@ from exts import db  # 导入数据库对象
 from models import Movie, PreMovies  # 导入建立的检索表
 # from prediction.DoubanPrediction import get_prediction_result
 from datasql.checkMovieExists import check_movie_exists
+from prediction.DoubanPrediction import get_prediction_result
 
 app = Flask(__name__, template_folder='./templates')
 app.config.from_object(config)
@@ -54,8 +55,10 @@ def get_detail():
         items, item_count, page_count = get_paginated_results(
             Movie.query.filter(Movie.movie.like("%{}%".format(key_words))), page, page_size)
 
+        movie_list = movieLists.movie_list
+
         # prediction_results = get_prediction_result()
-        # data="随机森林预测评分为： " + str(prediction_results))
+        # data = "随机森林预测评分为： " + str(prediction_results)
 
         # + "--------" + "xgbboost预测评分为： " + str(prediction_results[-2])
         # + "--------" + "catboost预测评分为： " + str(round(prediction_results[-1], 3))
@@ -63,7 +66,7 @@ def get_detail():
         # 映射到类似与百度百科的页面，并将查询到的条目传过去
 
         return render_template("moviePrediction.html", pre_movies=pre_movies, key_words=key_words, exist=exist,
-                               notexist=notexist)
+                               notexist=notexist, movies=movie_list)
 
 
 @app.route('/hotMovies.html', methods=["POST", "GET"])
