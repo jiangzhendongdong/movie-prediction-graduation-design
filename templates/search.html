@@ -16,12 +16,12 @@
         <div class="search bar" >
             <form id="searchForm" action="{{ url_for('get_detail') }}" method="get">
                 <input type="text" placeholder="请输入搜索关键词" name="key_word">
-                <button type="submit" ></button>
-            </form>
-
-            <p>{{ exist }}{{ notexist }}</p>
-
-            <div class="predict_score" style="font-size: 25px;color:#ec500b;font-weight: bolder">
+                <button type="subm
+     # 获取当前年份
+     current_year = db.session.execute('SELECT YEAR(CURDATE())').scalar()
+     # 计算开始年份
+     start_year = current_year - 10
+ redict_score" style="font-size: 25px;color:#ec500b;font-weight: bolder">
               <p>预测评分：</p><p>hhh{{ data }}</p>
             </div>
 
@@ -39,9 +39,9 @@
             {% for key_word in key_words %}
 
                 <h1><span id="movie">{{ key_word.movie }}</span></h1>
-                <div id="mainpic">
-                    放置海报
-                </div>
+<!--                <div id="mainpic">-->
+<!--&lt;!&ndash;                    放置海报&ndash;&gt;-->
+<!--                </div>-->
                 <div id="info">
                     <span>导演：{{ key_word.directors }}</span>
                     <span>主演：{{ key_word.actors[:3] }}</span>

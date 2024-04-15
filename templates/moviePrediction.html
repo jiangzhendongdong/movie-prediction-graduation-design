@@ -174,7 +174,7 @@
                   <p>{{ exist }}{{ notexist }}</p>
 
                   <div class="predict_score" style="font-size: 25px;color:#ec500b;font-weight: bolder">
-                    <p>预测评分：</p><p>👆请输入电影名称启动预测模块{{ data }}</p>
+                    <p>预测评分：</p><p>👆请输入电影名称启动预测模块</p><p>{{ data }}</p>
                   </div>
 
                   <div class="search_detail">
@@ -182,9 +182,9 @@
                   {% for key_word in key_words %}
 
                       <h1><span id="movie">{{ key_word.movie }}</span></h1>
-                      <div id="mainpic">
-                          放置海报
-                      </div>
+<!--                      <div id="mainpic">-->
+<!--                          放置海报-->
+<!--                      </div>-->
                       <div id="info">
                           <span>导演：{{ key_word.directors }}</span>
                           <span>主演：{{ key_word.actors[:3] }}</span>
@@ -202,18 +202,18 @@
                   </div>
 
       </div>
-      <div class="content-li li1">
-          <div class="li1-box">
-          {% for movie in movies %}
-          <a class="li1-box-item carbox" href="{{ movie.url }}">
-            <img src="../static/download-movies-image/怪物.jpg" alt="">
-            <div class="boxitem-title">
-              <h1>{{ movie.title }}</h1>
-            </div>
-          </a>
-          {% endfor %}
-          </div>
-      </div>
+<!--      <div class="content-li li1">-->
+<!--          <div class="li1-box">-->
+<!--          {% for movie in movies %}-->
+<!--          <a class="li1-box-item carbox" href="{{ movie.url }}">-->
+<!--            <img src="../static/download-movies-image/怪物.jpg" alt="">-->
+<!--            <div class="boxitem-title">-->
+<!--              <h1>{{ movie.title }}</h1>-->
+<!--            </div>-->
+<!--          </a>-->
+<!--          {% endfor %}-->
+<!--          </div>-->
+<!--      </div>-->
 
 <!--              <div class="unreleased_detail">-->
 <!--              {% for pre_movie in pre_movies %}-->

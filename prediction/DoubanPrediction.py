@@ -1,15 +1,17 @@
 import matplotlib
 import numpy as np
 import pandas as pd
+from lightgbm import LGBMRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, KFold
 from sklearn.preprocessing import LabelEncoder
 from pyinstrument import Profiler
 from catboost import CatBoostRegressor
 
-profiler_get_detail = Profiler()
-profiler_get_detail.start()
+
+# profiler_get_detail = Profiler()
+# profiler_get_detail.start()
 
 
 def data_preprocessing():
@@ -54,18 +56,21 @@ def data_preprocessing():
     x = df.drop(['douban_score'], axis=1)  # 特征
     y = df['douban_score']  # 目标变量
 
+    print(x)
+    print(y)
+
     return x, y
 
 
 def split_train_test_data():
     x, y = data_preprocessing()
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42, shuffle=True)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=42, shuffle=False)
     return x_train, x_test, y_train, y_test
 
 
 def get_prediction_result():
     x_train, x_test, y_train, y_test = split_train_test_data()
-    rf_regressor = RandomForestRegressor(n_estimators=50, random_state=42)
+    rf_regressor = RandomForestRegressor(n_estimators=50, random_state=42)  #early_stop_round=30
     rf_regressor.fit(x_train, y_train)
     y_pred_rf = rf_regressor.predict(x_test)
     ratingscore = y_pred_rf[-1]
@@ -75,8 +80,9 @@ def get_prediction_result():
 result = get_prediction_result()
 print(result)
 
-profiler_get_detail.stop()
-profiler_get_detail.print()
+
+# profiler_get_detail.stop()
+# profiler_get_detail.print()
 
 
 def predict():
@@ -182,4 +188,35 @@ def predict():
     # predictions_df = pd.DataFrame({'True Values': y_test,
     #                                'CatBoost Predictions': y_pred_catboost, })
 
-    return result
+    return 0
+
+
+def kfold():
+    x, y = data_preprocessing()
+
+    # 创建训练数据，总共250条样本
+    X = np.random.rand(250, 10)
+    y = np.random.rand(250)
+
+    # 构建K折交叉验证
+    n_split = 10
+    kf = KFold(n_splits=n_split, shuffle=True, random_state=42)
+
+    # 设置测试集大小为30%
+    test_size = 0.3
+
+    for train_index, test_index in kf.split(X):
+        X_train, X_test = X[train_index], X[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+
+        # 创建LightGBM模型
+        model = LGBMRegressor(n_estimators=150)
+
+        # 训练模型
+        model.fit(X_train, y_train, eval_set=[(X_test, y_test)], early_stopping_rounds=30, verbose=False)
+
+        # 预测
+        y_pred = model.predict(X_test)
+
+        # 打印预测结果等
+        print(f'Mean squared error: {mean_squared_error(y_test, y_pred)}')

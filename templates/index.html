@@ -9,7 +9,8 @@
   <link rel="stylesheet" type="text/css" href ="../static/css/base.css">
   <script src="../static/js/jq.js"></script>
   <link rel="stylesheet" type="text/css" href ="../static/css/index1.css">
-
+  <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -176,13 +177,14 @@
 
           <div class="carbox li2-box">
             <blockquote>
-              我国电影评分是评价电影制作质量和观众口碑的一项重要指标，受到电影自身内在因素和外部环境因素的双重影响，并且具有较为复杂的影响机制。因此对电影评分特别是在电影上映前的预测有很大的难度。目前针对电影评分的预测研究中的不足主要包括对用户评价、舆论热度等外界评价信息依赖较强、对于电影内在因素量化方式单一、缺少关于电影专门研究等。特别是现有的基于外界评价数据进行的预测很难应用在电影上映前，因此需研究运用机器学习模型对影片进行上映前预测。
-本文首先收集了自上世纪2020年起至2023年世界各地公开上映的电影，并将可能影响评分的常用变量因素包括导演、主演、评分、时长、影片介绍、影片类型等经过量化处理作为数据集的自变量，并根据电影的特点选择加入一些新的变量共同组成实验所需要的数据集。根据实验结果分析研究线性回归与聚类、神经网络、集成决策树、和随机森林五种模型对于电影评分的预测表现，证明随机森林模型是五种模型中更适合用于电影评分预测的模型。随机森林模型不仅预测电影评分效果最好，并且通过对模型分析可以得到影响电影评分的主要因素。
-为进一步验证随机森林模型在电影评分预测中的有效性和泛化性，本文收集了最近3个月上映的15部电影的相关信息，建立新的测试数据集，使用评分预测模型进行预测，最终获得了80％的总体准确性，并且对于评分在6分以上的电影有着较好的预测准确率，进一步证明了随机森林模型在电影评分预测方面具有较髙的性能，更适合应用在对电影的映前预测中。
-本文的研究工作和结论一方面为观众提供了在观影前通过映前的要素对影片质量进行初步估计的方式，另一方面也为电影制作方在选择导演、编剧、演员等演职人员和制作团队时提供一种可量化评估影响影片上映评分的方式。
+我国电影评分是评价电影制作质量和观众口碑的一项重要指标，受到电影自身内在因素和外部环境因素的双重影响，并且具有较为复杂的影响机制。目前针对电影评分的预测研究中的不足主要包括对用户评价、舆论热度等外界评价信息依赖较强、对于电影内在因素量化方式单一、缺少关于电影专门研究等。特别是现有的基于外界评价数据进行的预测很难应用在电影上映前。
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本文首先收集了自上世纪1960年起至2020年世界各地公开上映的电影，并将可能影响评分的常用变量因素包括导演、主演、评分、时长、影片介绍、影片类型等经过量化处理作为数据集的自变量，并根据电影的特点选择加入一些新的变量共同组成实验所需要的数据集，因此需研究运用机器学习模型对影片进行上映前预测
             </blockquote>
           </div>
 
+          <h1>近十年电影发行数量统计柱形图</h1>
+          <canvas id="main" width="800px" height="400px"></canvas>
+          <canvas id="main1" width="800px" height="400px"></canvas>
         </div>
 
         <div class="borderbotm"></div>
@@ -195,14 +197,43 @@
       </div>
       <div class="left">
       </div>
-
     </div>
+
 </body>
 
 <script type="text/javascript" src="../static/js/paper-full.min.js"></script>
 <script type="text/javascript" src="../static/js/canvas.js"></script>
 <script src="../static/js/base.js"></script>
-<script src="../static/jsndex.js"></script>
+<script>
+  const chartDom = document.getElementById('main');
+  const myChart = echarts.init(chartDom);
+  let option;
+  fetch('/index.html')
+  .then(getdata => {
+    option = {
+      xAxis: {
+        type: 'category',
+        data: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
+      },
+      yAxis: {
+        type: 'value',
+        name: '电影数量（部）'
+      },
+      series: [
+        {
+          data: [337, 338, 361, 363, 332, 388, 384, 306, 288, 112],
+          type: 'bar',
+          showBackground: true,
+          backgroundStyle: {
+            color: 'rgba(180, 180, 180, 0.2)'
+          }
+        }
+      ]
+    };
+
+    option && myChart.setOption(option)
+  });
+</script>
 
 
 </html>

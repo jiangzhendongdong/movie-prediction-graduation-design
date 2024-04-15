@@ -1,9 +1,10 @@
-﻿from flask import Flask, request, render_template
+﻿from flask import Flask, request, render_template, jsonify
 # request是请求前端数据相关的包，render_template是路由映射相关的包
 from flask_migrate import Migrate  # 数据库迁移相关的包
 import config  # 数据库连接相关
-from crawler import movieLists
+from crawler import movieLists, unreleasedPoster
 from datasql.getPaginated import get_paginated_results
+from datasql.getRecentMovies import getRecentMovies
 from exts import db  # 导入数据库对象
 from models import Movie, PreMovies  # 导入建立的检索表
 # from prediction.DoubanPrediction import get_prediction_result
@@ -19,8 +20,10 @@ migrate = Migrate(app, db)
 
 
 @app.route('/index.html', methods=["POST", "GET"])
-def index():
-    return render_template('index.html')
+def get_recent_movies():
+    getdata = getRecentMovies()
+    print(getdata)
+    return render_template('index.html', getdata=getdata)
 
 
 @app.route('/moviePrediction.html', methods=["POST", "GET"])
@@ -57,8 +60,8 @@ def get_detail():
 
         movie_list = movieLists.movie_list
 
-        # prediction_results = get_prediction_result()
-        # data = "随机森林预测评分为： " + str(prediction_results)
+        prediction_results = get_prediction_result()
+        data = "随机森林预测评分为： {:.3f}".format(prediction_results)
 
         # + "--------" + "xgbboost预测评分为： " + str(prediction_results[-2])
         # + "--------" + "catboost预测评分为： " + str(round(prediction_results[-1], 3))
@@ -66,7 +69,7 @@ def get_detail():
         # 映射到类似与百度百科的页面，并将查询到的条目传过去
 
         return render_template("moviePrediction.html", pre_movies=pre_movies, key_words=key_words, exist=exist,
-                               notexist=notexist, movies=movie_list)
+                               notexist=notexist, movies=movie_list, prediction_results=prediction_results, data=data)
 
 
 @app.route('/hotMovies.html', methods=["POST", "GET"])
@@ -76,8 +79,8 @@ def hot_movies():
 
 @app.route('/unreleasedFilms.html', methods=["POST", "GET"])
 def gonggao():
-    movie_list = movieLists.movie_list
-    return render_template('unreleasedFilms.html', movies=movie_list)
+    image_list = unreleasedPoster.image_list
+    return render_template('unreleasedFilms.html', imaage=image_list)
 
 
 if __name__ == '__main__':

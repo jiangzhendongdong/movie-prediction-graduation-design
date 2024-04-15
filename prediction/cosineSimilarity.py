@@ -67,8 +67,8 @@ def predictor(new_movie):
 
 
 # 测试
-release_movie = {'genres': ['喜剧', '爱情'],
-                 'directors': ['陈咏燊'],
-                 'actors': ['黄子华', '邓丽欣', '张继聪', '王菀之']}
+release_movie = {'genres': ['动作', '犯罪'],
+                 'directors': ['黄精甫'],
+                 'actors': ['阮经天','袁富华','陈以文' ,'王净','谢琼煖']}
 
 print(predictor(release_movie))

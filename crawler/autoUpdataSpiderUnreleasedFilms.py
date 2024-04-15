@@ -114,7 +114,7 @@ def crawl_data():
     print("自动更新豆瓣未上映电影于", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "爬取并更新至数据库")
 
 
-# schedule.every(12).hours.do(job)
+# schedule.every(24).hours.do(crawl_data)
 schedule.every(1).minutes.do(crawl_data)
 
 while True:
